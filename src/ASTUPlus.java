@@ -4,9 +4,10 @@ public class ASTUPlus implements ASTNode {
 
 	ASTNode lhs;
 
-	public int eval(Environment env) throws UndeclaredIdentifier, IOException { 
-		int v1 = this.lhs.eval(env);
-		return v1; 
+	public IValue eval(Environment env) throws UndeclaredIdentifier, IOException { 
+		VInt v1 = (VInt) this.lhs.eval(env);
+		v1.setVal(v1.getval()); 
+		return v1;
 	}
 
 	public ASTUPlus(ASTNode l) {

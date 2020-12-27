@@ -1,11 +1,15 @@
 import java.io.IOException;
 
 public class ASTBool implements ASTNode {
-
+	IValue lhs,rhs;
+	String symbol;
 	@Override
-	public int eval(Environment env) throws UndeclaredIdentifier, IOException {
-		// TODO Auto-generated method stub
-		return 0;
+	public IValue eval(Environment env) throws UndeclaredIdentifier, IOException {
+		return null;
+	}
+	
+	public ASTBool() {
+		
 	}
 
 	@Override

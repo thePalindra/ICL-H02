@@ -33,14 +33,14 @@ public class FileBuilder {
 	 static void writer(Environment e) throws IOException {
 		
 		FileWriter writer = new FileWriter("frame_" + e.id + ".j");
-		Set<Entry<String,Integer>> vars = e.current.entrySet();
+		Set<Entry<String,IValue>> vars = e.current.entrySet();
 		String varString="";
 		String trollStringV2 = "";
 		if(e.id>0 ) 
 			trollStringV2= "        .field public sl Lframe_" +e.parent.id +";\n";
 		
 
-		for(Entry<String,Integer> entry: vars) {
+		for(Entry<String,IValue> entry: vars) {
 			varString += "        .field	public	" + entry.getKey() +" I\r\n";
 		}
 		writer.write(".class	public	frame_"+ e.id+"\r\n" + 
@@ -61,7 +61,7 @@ public class FileBuilder {
 		String codeBlockString = "";
 		
 		for(int i=0; i<code.length&&code[i]!=null;i++) {
-			System.out.println(code[i]);
+			//System.out.println(code[i]);
 			codeBlockString+="       "+code[i] +"\n";
 		}
 		writerV2.write(".class public Demo\r\n" + 

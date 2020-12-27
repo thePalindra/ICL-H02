@@ -4,12 +4,17 @@ public class ASTPlus implements ASTNode {
 
 	ASTNode lhs, rhs;
 
-	public int eval(Environment env) throws UndeclaredIdentifier, IOException { 
-		int v1 = this.lhs.eval(env);
-		int v2 = this.rhs.eval(env);
-		return v1+v2; 
+	public IValue eval(Environment env) throws UndeclaredIdentifier, IOException{	
+		IValue	v1	=	lhs.eval(env);	
+		if	(v1	instanceof	VInt)	{	
+			IValue	v2	=	rhs.eval(env);	
+					if	(v2	instanceof	VInt){	
+						return	new	VInt(((VInt) v1).getval() + ((VInt) v2).getval());
+					}	
+		}
+		//throw TypeError(“+:	argument	is	not	an	integer”);
+		return null;
 	}
-
 
 	public ASTPlus(ASTNode l, ASTNode r) {
 		this.lhs = l; 

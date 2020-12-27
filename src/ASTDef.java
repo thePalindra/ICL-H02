@@ -15,15 +15,15 @@ public class ASTDef implements ASTNode{
 	}
 
 	@Override
-	public int eval(Environment env) throws UndeclaredIdentifier, IOException {
+	public IValue eval(Environment env) throws UndeclaredIdentifier, IOException {
 		env = env.beginEnviroment();
 		for (int i = 0; i < this.ids.size(); i++) {
 			String id = this.ids.get(i);
 			ASTNode init = this.inits.get(i);
-			int v1 = init.eval(env);
+			IValue v1 = init.eval(env);
 			env.assoc(id, v1);
 		}
-        int v2 = this.body.eval(env);
+		IValue v2 = this.body.eval(env);
 
         env.endEnviroment();
         return v2;
@@ -31,7 +31,7 @@ public class ASTDef implements ASTNode{
 
 	@Override
 	public void compile(CodeBlock c, Environment e) throws UndeclaredIdentifier, IOException {
-		e = e.beginEnviroment();
+		/*e = e.beginEnviroment();
 		c.emit("new frame_" + e.id);
         c.emit("dup");
         c.emit("invokespecial frame_" + e.id + "/<init>()V");
@@ -61,7 +61,7 @@ public class ASTDef implements ASTNode{
         }
         
         e.endEnviroment();
-
+	*/
 	}
 
 }

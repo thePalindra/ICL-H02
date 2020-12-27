@@ -19,8 +19,8 @@ public class Parser {
    	exp.compile(c,env);
    	FileBuilder.writerTroll(c.code);
    	for(String s: c.code) {
-   	  if(s!=null)
-		System.out.println( s );
+   	  //if(s!=null)
+		//System.out.println( s );
     }
     c = new CodeBlock();
    	
@@ -67,7 +67,43 @@ TOKEN :
   < RPAR : ")" >
   |
   < EQUALS : "=" >
-  |  
+  |
+  < EQ : "==" >
+  |
+  < GREATARINA : ">" >
+  |
+  < SMOL : "<" >
+  |
+  < GREATEREQ : ">=" >
+  |
+  < SMALLEREQ : "<=" >
+  |
+  < RESTINHO : "%" >
+  |
+  < AND : "&&" >
+  |
+  < OR : "||" >
+  |
+  < NEGATION : "~" >
+  |
+  < NEW : "new" >
+  |
+  < POINTER : "!" >
+  |
+  < ASSIGMENT : ":=" >
+  |
+  < WHILE : "while" >
+  |
+  < DO : "do" >
+  |
+  < PRINT : "print" >
+  |
+  < PRINTLN : "println" >
+  |
+  < THEN : "then" >
+  |
+  < ELSE : "else" >
+  |
   < EL: "\n" >
 }
 

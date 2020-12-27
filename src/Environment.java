@@ -8,7 +8,7 @@ public class Environment {
 	public int maxid;
 	public Environment parent;
 	private boolean envEnded=false;
-	public TreeMap <String, Integer> current;
+	public TreeMap <String, IValue> current;
 
 	
 	public Environment () {
@@ -16,7 +16,7 @@ public class Environment {
 		this.parent = null;
 		this.id = -1;
 		this.depth = -1;
-		this.current = new TreeMap<String, Integer>();
+		this.current = new TreeMap<String, IValue>();
 	}
 	
 	public Environment (Environment e, int id, int depth) throws IOException {
@@ -24,10 +24,10 @@ public class Environment {
 		this.id = id;
 		this.maxid = id;
 		this.depth = depth;
-		this.current = new TreeMap<String, Integer>();
+		this.current = new TreeMap<String, IValue>();
 	}
 
-	public void assoc (String id, int val) {
+	public void assoc (String id, IValue val) {
 		this.current.put(id, val);
 	}
 
@@ -48,12 +48,12 @@ public class Environment {
 		return this.parent;
 	}
 	
-	public int find (String id) throws UndeclaredIdentifier {
+	public IValue find (String id) throws UndeclaredIdentifier {
 		if (this.current.containsKey(id))
 			return this.current.get(id);
 		Environment temp = parent;
 		while (temp != null) {
-			TreeMap<String, Integer> aux = temp.current;
+			TreeMap<String, IValue> aux = temp.current;
 			if (aux.containsKey(id))
 				return aux.get(id);
 			temp = temp.parent;
