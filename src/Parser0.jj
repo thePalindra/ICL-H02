@@ -105,6 +105,10 @@ TOKEN :
   < ELSE : "else" >
   |
   < EL: "\n" >
+  |
+  < COMA: ";" >
+  |
+  < DOUBLECOMA: ";;" > 
 }
 
 ASTNode Start() throws IOException:
@@ -153,7 +157,12 @@ ASTNode Fact() throws IOException:
    | <MINUS> body=Fact() { body = new ASTUMinus(body); }
    | <PLUS> body=Fact() { body = new ASTUPlus(body);}
    | <DEF> (n = <Id> <EQUALS> t = Exp() { ids.add(n.toString()); inits.add(t);} )+ <IN> t1 = Exp() <END> {body = new ASTDef(ids,inits,t1);}
-   | n = <Id> {body = new ASTId(n.toString());})
+   | n = <Id> {body = new ASTId(n.toString());}
+   | <NEW> t = Exp() { body = new ASTNew(t); }
+   | <POINTER> t = Exp() { body = new ASTPointer(t); } //recebe um valor inteiro e vai à sua posição de memória
+   | t1 = Exp() <ASSIGMENT> t = Exp() { body = new ASTAssign (t1, t); } //Basicamente recebo um valor da posição da pilha t1 e o valor que ela recebe t
+   | t1 = Exp() <COMA> t = Exp() { body = ASTSeq (t1, t); }
+   )
  
    { return body; }
 }

@@ -5,6 +5,8 @@ public class ASTDef implements ASTNode{
 
 	List<String> ids;
 	List<ASTNode> inits;
+	List<String> idsP;
+	List<ASTNode> initsP;
 	ASTNode body;
 	
 	public ASTDef (List<String> ids, List<ASTNode> inits, ASTNode body) throws IOException{
