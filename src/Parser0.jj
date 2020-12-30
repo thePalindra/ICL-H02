@@ -11,10 +11,11 @@ public class Parser {
     CodeBlock c = new CodeBlock();
     ASTNode exp;
 	Environment env = new Environment();
+	BigStack b = new BigStack();
     while (true) {
     try {
     exp = parser.Start();
-    System.out.println( exp.eval(env) );
+    System.out.println( exp.eval(env).toString() );
     env.maxid = -1;
    	exp.compile(c,env);
    	FileBuilder.writerTroll(c.code);
@@ -114,21 +115,37 @@ TOKEN :
 ASTNode Start() throws IOException:
 { ASTNode t; }
 {
-   t = Exp() <EL>
+   t = Em() <EL>
    { return t; }
 }
 
-ASTNode Exp() throws IOException:
-{ Token op;
-  ASTNode t1, t2; }
+ASTNode Em() throws IOException:
+{ASTNode t1, t2;
+}
 {
-     t1=Term() ( ( op=<PLUS> | op=<MINUS>) t2=Term() 
-                 { if (op.kind == PLUS) 
+  t1 = E() (<COMA> t2 = E() { t1 = new ASTSeq (t1, t2); })*
+
+  {return t1; }
+}
+
+ASTNode E() throws IOException:
+{ASTNode t1, t; }
+{
+  t1 = Exp() (<ASSIGMENT> t = Exp() { t1 = new ASTAssign (t1, t); })?
+  {return t1;}
+}
+  
+
+ASTNode Exp() throws IOException:
+{Token op;
+ASTNode t1, t2; }
+{
+     t1 = Term() ( ( op=<PLUS> | op=<MINUS> ) t2 = Term() // changed
+ 		 { if (op.kind == PLUS) 
                          t1 = new ASTPlus(t1,t2);
-                   else
-                     t1 = new ASTSub(t1,t2);
-                 } 
-               ) * 
+                   else  t1 = new ASTSub(t1,t2);
+                 }  
+		)*
      { return t1; } 
 }
 
@@ -141,7 +158,7 @@ ASTNode Term() throws IOException:
                          t1 = new ASTMult(t1,t2);
                    else  t1 = new ASTDiv(t1,t2);
                  }  
-		)?
+		)*
      { return t1; } 
 }
 
@@ -158,10 +175,8 @@ ASTNode Fact() throws IOException:
    | <PLUS> body=Fact() { body = new ASTUPlus(body);}
    | <DEF> (n = <Id> <EQUALS> t = Exp() { ids.add(n.toString()); inits.add(t);} )+ <IN> t1 = Exp() <END> {body = new ASTDef(ids,inits,t1);}
    | n = <Id> {body = new ASTId(n.toString());}
-   | <NEW> t = Exp() { body = new ASTNew(t); }
+   | <NEW> t = Fact() { body = new ASTNew(t); }
    | <POINTER> t = Exp() { body = new ASTPointer(t); } //recebe um valor inteiro e vai à sua posição de memória
-   | t1 = Exp() <ASSIGMENT> t = Exp() { body = new ASTAssign (t1, t); } //Basicamente recebo um valor da posição da pilha t1 e o valor que ela recebe t
-   | t1 = Exp() <COMA> t = Exp() { body = ASTSeq (t1, t); }
    )
  
    { return body; }

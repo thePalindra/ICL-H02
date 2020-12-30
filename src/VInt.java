@@ -19,7 +19,7 @@ public class VInt implements IValue {
 	
 	
 	public String toString() {
-		return this.toString();
+		return Integer.toString(v);
 	}
 
 
