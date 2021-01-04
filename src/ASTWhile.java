@@ -6,12 +6,16 @@ public class ASTWhile implements ASTNode {
 	private ASTNode operation;
 	
 	public ASTWhile (ASTNode condition, ASTNode operation) {
-		
+		this.condition=condition;
+		this.operation=operation;
 	}
 
 	@Override
 	public IValue eval(Environment env) throws UndeclaredIdentifier, IOException {
-		// TODO Auto-generated method stub
+		//Probably will need many typeChecks
+		do {
+			operation.eval(env);
+		}while(((VBool) condition.eval(env)).getBool());
 		return null;
 	}
 
