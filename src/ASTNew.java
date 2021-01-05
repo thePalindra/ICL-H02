@@ -3,13 +3,14 @@ import java.io.IOException;
 public class ASTNew implements ASTNode {
 	ASTNode exp;
 	@Override
-	public IValue eval(Environment env) throws UndeclaredIdentifier, IOException {
+	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
 		
 		//VMCell ref = env.declareNew(exp.eval())
 		
+		
 		//return ref;
 		
-		return null;
+		return b.inc(exp.eval(env, b));
 	}
 	
 	public ASTNew(ASTNode exp) {

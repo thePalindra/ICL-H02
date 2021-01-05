@@ -8,12 +8,12 @@ public class ASTAssign implements ASTNode {
 		rhs = right;
 	}
 	@Override
-	public IValue eval(Environment env) throws UndeclaredIdentifier, IOException{
-			IValue	v1	=	lhs.eval(env);	
-			if	(v1	instanceof	VMCell)	{	
-				IValue v2	=	rhs.eval(env);	
-				((VMCell)v1).set(v2);		
-				return	v2;	
+	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException{
+			IValue	v1	=	lhs.eval(env,b);	
+			if	(v1	instanceof	VRef)	{	
+				IValue v2	=	rhs.eval(env,b);	
+				b.change(((VRef) v1).getRef(), v2);	
+				return	v2;
 			}	
 			//throw	TypeError(“assignment	:=	:	lhs	is	not	a	reference”);	
 			return null; /** CHANGE**/

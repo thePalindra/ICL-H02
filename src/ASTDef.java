@@ -1,8 +1,8 @@
 import java.io.IOException;
 import java.util.List;
+ class ASTDef implements ASTNode{
 
-public class ASTDef implements ASTNode{
-
+public
 	List<String> ids;
 	List<ASTNode> inits;
 	List<String> idsP;
@@ -17,15 +17,15 @@ public class ASTDef implements ASTNode{
 	}
 
 	@Override
-	public IValue eval(Environment env) throws UndeclaredIdentifier, IOException {
+	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
 		env = env.beginEnviroment();
 		for (int i = 0; i < this.ids.size(); i++) {
 			String id = this.ids.get(i);
 			ASTNode init = this.inits.get(i);
-			IValue v1 = init.eval(env);
+			IValue v1 = init.eval(env,b);
 			env.assoc(id, v1);
 		}
-		IValue v2 = this.body.eval(env);
+		IValue v2 = this.body.eval(env,b);
 
         env.endEnviroment();
         return v2;

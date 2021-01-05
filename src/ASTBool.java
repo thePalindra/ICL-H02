@@ -1,15 +1,14 @@
 import java.io.IOException;
 
 public class ASTBool implements ASTNode {
-	IValue lhs,rhs;
-	String symbol;
+	VBool exp;
 	@Override
-	public IValue eval(Environment env) throws UndeclaredIdentifier, IOException {
-		return null;
+	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
+		return exp;
 	}
 	
-	public ASTBool() {
-		
+	public ASTBool(boolean exp) {
+		this.exp = new VBool(exp);
 	}
 
 	@Override

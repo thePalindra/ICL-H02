@@ -4,8 +4,8 @@ public class ASTUMinus implements ASTNode {
 
 	ASTNode lhs;
 
-	public IValue eval(Environment env) throws UndeclaredIdentifier, IOException { 
-		VInt v1 = (VInt) this.lhs.eval(env);
+	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException { 
+		VInt v1 = (VInt) this.lhs.eval(env,b);
 		v1.setVal(-v1.getval()); 
 		return v1;
 	} //maybe not this way
@@ -16,7 +16,7 @@ public class ASTUMinus implements ASTNode {
 
 	@Override
 	public void compile(CodeBlock c, Environment e) throws UndeclaredIdentifier, IOException {
-		c.emit("sipush " + eval(e));
+		//c.emit("sipush " + eval(e));
 		
 	}
 }

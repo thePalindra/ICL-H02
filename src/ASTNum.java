@@ -2,7 +2,7 @@ public class ASTNum implements ASTNode {
 
 	VInt val;
 
-	public IValue eval(Environment env) { 
+	public IValue eval(Environment env,BigStack b) { 
 		return val ; 
 	}
 

@@ -10,9 +10,8 @@ public class ASTPointer implements ASTNode {
 	}
 
 	@Override
-	public IValue eval(Environment env) throws UndeclaredIdentifier, IOException {
-		// TODO Auto-generated method stub
-		return null;
+	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
+		return b.getMemoryPos(t.eval(env, b));
 	}
 
 	@Override

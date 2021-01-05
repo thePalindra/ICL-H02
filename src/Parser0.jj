@@ -15,7 +15,7 @@ public class Parser {
     while (true) {
     try {
     exp = parser.Start();
-    System.out.println( exp.eval(env).toString() );
+    System.out.println( exp.eval(env,b).toString() );
     env.maxid = -1;
    	exp.compile(c,env);
    	FileBuilder.writerTroll(c.code);

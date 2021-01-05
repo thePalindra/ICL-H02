@@ -11,18 +11,27 @@ public class BigStack {
 		this.iv = new IValue[maxSize];
 	}
 	
-	public boolean inc (IValue iv) {
+	public IValue inc (IValue iv) {
 		if (counter < maxSize ) {
 			this.resize();
 		}
 		this.iv[counter++] = iv;
-		return true;
+		return iv;
 	}
 	
 	public void change (int i, IValue iv) {
 		if (i < 0 || i >= counter)
 			return;
 		this.iv [i] = iv;
+	}
+	
+	public IValue getMemoryPos(IValue i) {
+		if(i instanceof VRef) {
+			return iv[((VRef) i).getRef()];
+		}else {
+			//return error typeChecking
+			return null;
+		}
 	}
 
 	private void resize() {
