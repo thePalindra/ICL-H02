@@ -41,6 +41,7 @@ SKIP :
   " "
 | "\t"
 | "\r"
+| "\n"
 }
 
 TOKEN :
@@ -50,7 +51,21 @@ TOKEN :
   < IN : "in">
   |
   < END : "end">
+  |
+  < NEW : "new" >
+  |
+  < WHILE : "while" >
+  |
+  < ELSE : "else" >
   | 
+  < DO : "do" >
+  |
+  < PRINT : "print" >
+  |
+  < PRINTLN : "println" >
+  |
+  < THEN : "then" >
+  |
   < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
   |
   < Num: (["0"-"9"]) + >
@@ -86,26 +101,10 @@ TOKEN :
   < OR : "||" >
   |
   < NEGATION : "~" >
-  |
-  < NEW : "new" >
-  |
+  | 
   < POINTER : "!" >
   |
   < ASSIGMENT : ":=" >
-  |
-  < WHILE : "while" >
-  |
-  < DO : "do" >
-  |
-  < PRINT : "print" >
-  |
-  < PRINTLN : "println" >
-  |
-  < THEN : "then" >
-  |
-  < ELSE : "else" >
-  |
-  < EL: "\n" >
   |
   < COMA: ";" >
   |
@@ -115,7 +114,7 @@ TOKEN :
 ASTNode Start() throws IOException:
 { ASTNode t; }
 {
-   t = Em() <EL>
+   t = Em() <DOUBLECOMA>
    { return t; }
 }
 
@@ -129,23 +128,24 @@ ASTNode Em() throws IOException:
 }
 
 ASTNode E() throws IOException:
-{ASTNode t1, t; }
+{ASTNode t1, t2; }
 {
-  t1 = Exp() (<ASSIGMENT> t = Exp() { t1 = new ASTAssign (t1, t); })?
+  t1 = Exp() (<ASSIGMENT>) t2 = Exp() { t1 = new ASTAssign (t1, t2); })?
   {return t1;}
 }
   
 
 ASTNode Exp() throws IOException:
-{Token op;
-ASTNode t1, t2; }
+{ Token op;
+  ASTNode t1, t2; }
 {
-     t1 = Term() ( ( op=<PLUS> | op=<MINUS> ) t2 = Term() // changed
- 		 { if (op.kind == PLUS) 
+     t1=Term() ( ( op=<PLUS> | op=<MINUS>) t2=Term() 
+                 { if (op.kind == PLUS) 
                          t1 = new ASTPlus(t1,t2);
-                   else  t1 = new ASTSub(t1,t2);
-                 }  
-		)*
+                   else
+                     t1 = new ASTSub(t1,t2);
+                 } 
+               ) * 
      { return t1; } 
 }
 
@@ -153,7 +153,7 @@ ASTNode Term() throws IOException:
 {Token op;
   ASTNode t1, t2;}
 {
-     t1 = Fact() ( ( op=<TIMES> | op=<DIV> ) t2 = Term() // changed
+     t1 = Fact() ( ( op=<TIMES> | op=<DIV> ) t2 = Fact() // changed
  		 { if (op.kind == TIMES) 
                          t1 = new ASTMult(t1,t2);
                    else  t1 = new ASTDiv(t1,t2);
@@ -162,7 +162,7 @@ ASTNode Term() throws IOException:
      { return t1; } 
 }
 
-
+	
 ASTNode Fact() throws IOException:
 { Token n;
   List<String> ids = new ArrayList<String>();
@@ -173,12 +173,12 @@ ASTNode Fact() throws IOException:
    | <LPAR> body=Exp() <RPAR>
    | <MINUS> body=Fact() { body = new ASTUMinus(body); }
    | <PLUS> body=Fact() { body = new ASTUPlus(body);}
-   | <DEF> (n = <Id> <EQUALS> t = Exp() { ids.add(n.toString()); inits.add(t);} )+ <IN> t1 = Exp() <END> {body = new ASTDef(ids,inits,t1);}
+   | <DEF> (n = <Id> <EQUALS> t = Em() { ids.add(n.toString()); inits.add(t);} )+ <IN> t1 = Em() <END> {body = new ASTDef(ids,inits,t1);}
    | n = <Id> {body = new ASTId(n.toString());}
    | <NEW> t = Fact() { body = new ASTNew(t); }
-   | <POINTER> t = Exp() { body = new ASTPointer(t); } //recebe um valor inteiro e vai à sua posição de memória
+   | <POINTER> t = Exp() { body = new ASTPointer(t); }
    )
- 
+
    { return body; }
 }
 

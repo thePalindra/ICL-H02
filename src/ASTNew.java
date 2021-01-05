@@ -5,16 +5,11 @@ public class ASTNew implements ASTNode {
 	@Override
 	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
 		
-		//VMCell ref = env.declareNew(exp.eval())
-		
-		
-		//return ref;
-		
 		return b.inc(exp.eval(env, b));
 	}
 	
 	public ASTNew(ASTNode exp) {
-		this.exp = exp;
+		this.exp = exp;	
 	}
 
 	@Override

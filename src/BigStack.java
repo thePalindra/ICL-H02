@@ -16,7 +16,7 @@ public class BigStack {
 			this.resize();
 		}
 		this.iv[counter++] = iv;
-		return iv;
+		return new VMCell(counter-1);
 	}
 	
 	public void change (int i, IValue iv) {
@@ -26,8 +26,8 @@ public class BigStack {
 	}
 	
 	public IValue getMemoryPos(IValue i) {
-		if(i instanceof VRef) {
-			return iv[((VRef) i).getRef()];
+		if(i instanceof VMCell) {
+			return iv[((VMCell) i).getRef()];
 		}else {
 			//return error typeChecking
 			return null;

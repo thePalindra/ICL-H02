@@ -1,20 +1,13 @@
 
-public class VMCell implements IValue {
+public class VMCell implements IValue{
+private int ref;
 
-	IValue v;
-	public VMCell(IValue v0) {
-		v = v0;
+	public VMCell(int ref) {
+		this.ref=ref;
 	}
 	
-	
-	@Override
-	public IValue eval(Environment e) {
-		// TODO Auto-generated method stub
-		return null;
+	public int getRef() {
+		return ref;
 	}
-	
-	void set(IValue	v0)	{
-		v = v0;
-	}
-
 }
+

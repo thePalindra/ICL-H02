@@ -10,9 +10,9 @@ public class ASTAssign implements ASTNode {
 	@Override
 	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException{
 			IValue	v1	=	lhs.eval(env,b);	
-			if	(v1	instanceof	VRef)	{	
+			if	(v1	instanceof	VMCell)	{	
 				IValue v2	=	rhs.eval(env,b);	
-				b.change(((VRef) v1).getRef(), v2);	
+				b.change(((VMCell) v1).getRef(), v2);	
 				return	v2;
 			}	
 			//throw	TypeError(“assignment	:=	:	lhs	is	not	a	reference”);	

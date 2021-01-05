@@ -23,9 +23,4 @@ public class VInt implements IValue {
 	}
 
 
-	@Override
-	public IValue eval(Environment e) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

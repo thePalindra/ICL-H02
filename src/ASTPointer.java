@@ -11,7 +11,14 @@ public class ASTPointer implements ASTNode {
 
 	@Override
 	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
-		return b.getMemoryPos(t.eval(env, b));
+		VMCell ref = (VMCell) t.eval(env, b);
+		if(ref instanceof VMCell) {
+			return b.getMemoryPos(ref);
+		}else {
+			System.out.println("TypeError");
+			return null;
+		}
+		
 	}
 
 	@Override
