@@ -1,16 +1,17 @@
 import java.io.IOException;
 
-public class ASTPrint implements ASTNode {
+public class ASTPrintln implements ASTNode {
+	
 	private ASTNode expression;
 	
-	public ASTPrint(ASTNode expression){
+	public ASTPrintln(ASTNode expression){
 		this.expression=expression;
 	}
 
 	@Override
 	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
 		IValue balls = this.expression.eval(env, b);
-		System.out.print(balls);
+		System.out.println(balls);
 		return balls;
 	} //this shit probably not needed
 
