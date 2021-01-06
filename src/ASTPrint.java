@@ -9,7 +9,7 @@ public class ASTPrint implements ASTNode {
 
 	@Override
 	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
-		return null;
+		return expression.eval(env, b);
 	} //this shit probably not needed
 
 	@Override

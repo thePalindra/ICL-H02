@@ -16,6 +16,7 @@ public class ASTAssign implements ASTNode {
 				return	v2;
 			}	
 			//throw	TypeError(“assignment	:=	:	lhs	is	not	a	reference”);	
+			System.out.println("Oh no");
 			return null; /** CHANGE**/
 	}
 

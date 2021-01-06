@@ -54,6 +54,8 @@ TOKEN :
   |
   < NEW : "new" >
   |
+  < IF : "if" >	
+  |
   < WHILE : "while" >
   |
   < ELSE : "else" >
@@ -104,7 +106,7 @@ TOKEN :
   | 
   < POINTER : "!" >
   |
-  < ASSIGMENT : ":=" >
+  < ASSIGNMENT : ":=" >
   |
   < COMA: ";" >
   |
@@ -128,9 +130,22 @@ ASTNode Em() throws IOException:
 }
 
 ASTNode E() throws IOException:
-{ASTNode t1, t2; }
+{ASTNode t1, t2;
+Token op;}
 {
-  t1 = Exp() (<ASSIGMENT>) t2 = Exp() { t1 = new ASTAssign (t1, t2); })?
+  t1 = Exp() (( op = < EQ > | op = < GREATARINA > | op = < SMOL > | op = < GREATEREQ > | op = < SMALLEREQ > | op = < ASSIGNMENT >) t2 = Exp() {
+    if (op.kind == ASSIGNMENT)
+    	t1 = new ASTAssign (t1, t2);
+    else if (op.kind == EQ)
+    	t1 = new ASTEq(t1,t2);
+    else if (op.kind == GREATARINA)
+    	t1 = new ASTGreaterThan(t1,t2);
+    else if (op.kind == SMOL)
+    	t1 = new ASTSmallerThan(t1,t2);
+    else if (op.kind == GREATEREQ)
+    	t1 = new ASTGreaterEqual(t1,t2);
+    else
+    	t1 = new ASTSmallerEqual(t1,t2);})?
   {return t1;}
 }
   
@@ -167,7 +182,7 @@ ASTNode Fact() throws IOException:
 { Token n;
   List<String> ids = new ArrayList<String>();
   List<ASTNode> inits = new ArrayList<ASTNode>();
-  ASTNode t, t1, body;}
+  ASTNode t, t1, body = null;}
 {
    ( n=<Num> { body = new ASTNum(Integer.parseInt(n.image)); }
    | <LPAR> body=Exp() <RPAR>
@@ -177,6 +192,11 @@ ASTNode Fact() throws IOException:
    | n = <Id> {body = new ASTId(n.toString());}
    | <NEW> t = Fact() { body = new ASTNew(t); }
    | <POINTER> t = Exp() { body = new ASTPointer(t); }
+   | <IF> t = Em() <THEN> t1 = Em() (<ELSE> body = Em())? <END> {body = new ASTIf(t,t1,body);}
+   | <WHILE> t = Em() <DO> t1 = Em() <END> { body = new ASTWhile(t,t1); }
+   | <PRINT> t = E() { body = new ASTPrint(t); }
+   //| <PRINTLN> t = E() { body = new ASTPrintln(t); }
+   //| <PRINTLN> { body = new ASTPrintln(null); }
    )
 
    { return body; }
