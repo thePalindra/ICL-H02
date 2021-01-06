@@ -12,11 +12,11 @@ public class ASTWhile implements ASTNode {
 
 	@Override
 	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
-		//Probably will need many typeChecks
+		IValue test;
 		do {
-			operation.eval(env,b);
+			test = operation.eval(env,b);
 		}while(((VBool) condition.eval(env,b)).getBool());
-		return null;
+		return test;
 	}
 
 	@Override
