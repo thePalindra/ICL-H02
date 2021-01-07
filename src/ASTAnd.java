@@ -16,7 +16,7 @@ public class ASTAnd implements ASTNode {
 						return	new	VBool(((VBool) v1).getBool() && ((VBool) v2).getBool());
 					}	
 		}
-		//throw TypeError(“+:	argument	is	not	an	integer”);
+		System.out.println("&&: argument is not a boolean");
 		return null;
 	}
 	@Override

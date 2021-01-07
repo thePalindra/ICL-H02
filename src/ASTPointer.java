@@ -15,7 +15,7 @@ public class ASTPointer implements ASTNode {
 		if(ref instanceof VMCell) {
 			return b.getMemoryPos(ref);
 		}else {
-			System.out.println("TypeError");
+			System.out.println("||:	argument is	not	a reference");
 			return null;
 		}
 		

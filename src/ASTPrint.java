@@ -12,7 +12,7 @@ public class ASTPrint implements ASTNode {
 		IValue balls = this.expression.eval(env, b);
 		System.out.print(balls);
 		return balls;
-	} //this shit probably not needed
+	} 
 
 	@Override
 	public void compile(CodeBlock c, Environment e) throws UndeclaredIdentifier, IOException {

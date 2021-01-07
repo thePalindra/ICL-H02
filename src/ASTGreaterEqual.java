@@ -16,7 +16,7 @@ public class ASTGreaterEqual implements ASTNode {
 						return	new	VBool(((VInt) v1).getval() >= ((VInt) v2).getval());
 					}	
 		}
-		//throw TypeError(“+:	argument	is	not	an	integer”);
+		System.out.println(">=:	argument is not	an integer");
 		return null;
 	}
 	@Override

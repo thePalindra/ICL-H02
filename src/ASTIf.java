@@ -14,16 +14,21 @@ public class ASTIf implements ASTNode {
 
 	@Override
 	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
-		//Probably will need many typeChecks
-		if(((VBool) condition.eval(env,b)).getBool()) {
-			return thenOperation.eval(env,b);
-		}else {
-			if(elseOperation==null) {
-				return null; //print error
-			}else {
-				return elseOperation.eval(env,b);
-			}
+		if(condition.eval(env, b) instanceof VBool) {
 			
+			if(((VBool) condition.eval(env,b)).getBool()) {
+				return thenOperation.eval(env,b);
+			}else {
+				if(elseOperation==null) {
+					return null; //print error
+				}else {
+					return elseOperation.eval(env,b);
+				}
+				
+			}
+		}else {
+			System.out.println("condition: argument is	not	a boolean");
+			return null;
 		}
 	}
 

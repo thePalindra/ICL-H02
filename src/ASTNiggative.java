@@ -12,6 +12,7 @@ public class ASTNiggative implements ASTNode{
 	        if    (v1    instanceof    VBool)    {
 	            return new VBool(!((VBool) v1).getBool());
 	        }
+	        System.out.println("~: argument is	not	a boolean");
 	        return null;
 	}
 

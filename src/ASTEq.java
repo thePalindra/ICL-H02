@@ -20,8 +20,13 @@ public class ASTEq implements ASTNode {
 					if	(v2	instanceof	VInt){	
 						return	new	VBool(((VInt) v1).getval() == ((VInt) v2).getval());
 					}	
+		}else if(v1 instanceof VMCell ) {
+			IValue	v2	=	rhs.eval(env,b);	
+			if	(v2	instanceof	VMCell){	
+				return	new	VBool(((VMCell) v1).getRef() == ((VMCell) v2).getRef());
+			}	
 		}
-		//throw TypeError(“+:	argument	is	not	an	integer”);
+		System.out.println("==:	argument is	not	an integer, boolean or VMCell");
 		return null;
 	}
 

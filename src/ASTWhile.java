@@ -13,10 +13,15 @@ public class ASTWhile implements ASTNode {
 	@Override
 	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
 		IValue test;
-		do {
-			test = operation.eval(env,b);
-		}while(((VBool) condition.eval(env,b)).getBool());
-		return test;
+		if(condition.eval(env,b) instanceof VBool){
+			do {
+				test = operation.eval(env,b);
+			}while(((VBool) condition.eval(env,b)).getBool());
+			return test;
+		}else {
+			System.out.println("while: condition is not a boolean");
+			return null;
+		}
 	}
 
 	@Override
