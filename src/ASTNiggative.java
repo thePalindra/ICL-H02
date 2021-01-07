@@ -8,11 +8,11 @@ public class ASTNiggative implements ASTNode{
 	}
 	@Override
 	public IValue eval(Environment env, BigStack b) throws UndeclaredIdentifier, IOException {
-		IValue	v1	=	nig.eval(env,b);	
-		if	(v1	instanceof	VBool)	{	
-			return v1;
-		}
-		return null;
+		 IValue    v1    =    nig.eval(env,b);
+	        if    (v1    instanceof    VBool)    {
+	            return new VBool(!((VBool) v1).getBool());
+	        }
+	        return null;
 	}
 
 	@Override
