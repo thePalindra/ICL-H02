@@ -17,7 +17,7 @@ public
 	}
 
 	@Override
-	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
+	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException,TypeErrorException {
 		env = env.beginEnviroment();
 		for (int i = 0; i < this.ids.size(); i++) {
 			String id = this.ids.get(i);

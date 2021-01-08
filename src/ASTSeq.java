@@ -11,7 +11,7 @@ public class ASTSeq implements ASTNode {
 	}
 
 	@Override
-	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
+	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException,TypeErrorException {
 		t1.eval(env,b); // is this it?
 		return t2.eval(env,b);
 	}

@@ -8,15 +8,14 @@ public class ASTAssign implements ASTNode {
 		rhs = right;
 	}
 	@Override
-	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException{
+	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException,TypeErrorException{
 			IValue	v1	=	lhs.eval(env,b);	
 			if	(v1	instanceof	VMCell)	{	
 				IValue v2	=	rhs.eval(env,b);	
 				b.change(((VMCell) v1).getRef(), v2);	
 				return	v2;
 			}		
-			System.out.println("assignment :=:lhs is not a VMCell");
-			return null; /** CHANGE**/
+			throw new TypeErrorException("assignment :=:lhs is not a VMCell");
 	}
 
 	@Override

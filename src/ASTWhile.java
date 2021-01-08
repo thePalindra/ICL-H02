@@ -11,7 +11,7 @@ public class ASTWhile implements ASTNode {
 	}
 
 	@Override
-	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
+	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException,TypeErrorException {
 		IValue test;
 		if(condition.eval(env,b) instanceof VBool){
 			do {
@@ -19,8 +19,7 @@ public class ASTWhile implements ASTNode {
 			}while(((VBool) condition.eval(env,b)).getBool());
 			return test;
 		}else {
-			System.out.println("while: condition is not a boolean");
-			return null;
+			throw new TypeErrorException("while: condition is not a boolean");
 		}
 	}
 

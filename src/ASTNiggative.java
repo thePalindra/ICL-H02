@@ -7,13 +7,12 @@ public class ASTNiggative implements ASTNode{
 		this.nig = gas; 
 	}
 	@Override
-	public IValue eval(Environment env, BigStack b) throws UndeclaredIdentifier, IOException {
+	public IValue eval(Environment env, BigStack b) throws UndeclaredIdentifier, IOException, TypeErrorException {
 		 IValue    v1    =    nig.eval(env,b);
 	        if    (v1    instanceof    VBool)    {
 	            return new VBool(!((VBool) v1).getBool());
 	        }
-	        System.out.println("~: argument is	not	a boolean");
-	        return null;
+	        throw new TypeErrorException("~: argument is not a boolean");
 	}
 
 	@Override

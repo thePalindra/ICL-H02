@@ -8,7 +8,7 @@ public class ASTPrint implements ASTNode {
 	}
 
 	@Override
-	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
+	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException,TypeErrorException {
 		IValue balls = this.expression.eval(env, b);
 		System.out.print(balls);
 		return balls;

@@ -8,7 +8,7 @@ public class ASTEq implements ASTNode {
 		rhs = right;
 	}
 	@Override
-	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
+	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException,TypeErrorException {
 		IValue	v1	=	lhs.eval(env,b);	
 		if	(v1	instanceof	VBool)	{	
 			IValue	v2	=	rhs.eval(env,b);	
@@ -25,8 +25,10 @@ public class ASTEq implements ASTNode {
 			if	(v2	instanceof	VMCell){	
 				return	new	VBool(((VMCell) v1).getRef() == ((VMCell) v2).getRef());
 			}	
+		}else {
+			throw new TypeErrorException("==: argument is not an integer, boolean or VMCell");
 		}
-		System.out.println("==:	argument is	not	an integer, boolean or VMCell");
+		
 		return null;
 	}
 

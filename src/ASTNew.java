@@ -3,7 +3,7 @@ import java.io.IOException;
 public class ASTNew implements ASTNode {
 	ASTNode exp;
 	@Override
-	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
+	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException,TypeErrorException {
 		
 		return b.inc(exp.eval(env, b));
 	}

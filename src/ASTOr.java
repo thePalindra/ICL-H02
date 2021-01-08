@@ -8,7 +8,7 @@ public class ASTOr implements ASTNode {
 		rhs = right;
 	}
 	@Override
-	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
+	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException,TypeErrorException {
 		IValue	v1	=	lhs.eval(env,b);	
 		if	(v1	instanceof	VBool)	{	
 			IValue	v2	=	rhs.eval(env,b);	
@@ -16,8 +16,7 @@ public class ASTOr implements ASTNode {
 						return	new	VBool(((VBool) v1).getBool() || ((VBool) v2).getBool());
 					}	
 		}
-		System.out.println("||:	argument is	not	a boolean");
-		return null;
+		throw new TypeErrorException("||: argument is not a boolean");
 	}
 	@Override
 	public void compile(CodeBlock c, Environment e) throws UndeclaredIdentifier, IOException {

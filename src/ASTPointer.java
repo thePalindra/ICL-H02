@@ -10,13 +10,12 @@ public class ASTPointer implements ASTNode {
 	}
 
 	@Override
-	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
+	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException,TypeErrorException {
 		VMCell ref = (VMCell) t.eval(env, b);
 		if(ref instanceof VMCell) {
 			return b.getMemoryPos(ref);
 		}else {
-			System.out.println("||:	argument is	not	a reference");
-			return null;
+			throw new TypeErrorException("||: argument is not a reference");
 		}
 		
 	}

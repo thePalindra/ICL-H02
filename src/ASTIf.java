@@ -13,7 +13,7 @@ public class ASTIf implements ASTNode {
 	}
 
 	@Override
-	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException {
+	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException,TypeErrorException {
 		if(condition.eval(env, b) instanceof VBool) {
 			
 			if(((VBool) condition.eval(env,b)).getBool()) {
@@ -27,8 +27,7 @@ public class ASTIf implements ASTNode {
 				
 			}
 		}else {
-			System.out.println("condition: argument is	not	a boolean");
-			return null;
+			throw new TypeErrorException("condition: argument is not a boolean");
 		}
 	}
 

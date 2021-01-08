@@ -4,7 +4,7 @@ public class ASTMult implements ASTNode {
 
 	ASTNode lhs, rhs;
 
-	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException{	
+	public IValue eval(Environment env,BigStack b) throws UndeclaredIdentifier, IOException,TypeErrorException{	
 		IValue	v1	=	lhs.eval(env,b);	
 		if	(v1	instanceof	VInt)	{	
 			IValue	v2	=	rhs.eval(env,b);	
@@ -12,8 +12,7 @@ public class ASTMult implements ASTNode {
 						return	new	VInt(((VInt) v1).getval() * ((VInt) v2).getval());
 					}	
 		}
-		System.out.println("*: argument is not an integer");
-		return null;
+		throw new TypeErrorException("*: argument is not an integer");
 	}
 
 	public ASTMult(ASTNode l, ASTNode r) {
