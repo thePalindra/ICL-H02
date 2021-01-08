@@ -21,6 +21,7 @@ public class Parser {
    	exp.compile(c,env);
    	FileBuilder.writerTroll(c.code);
    	for(String s: c.code) {
+   	  //Comentário para o scamaz
    	  //if(s!=null)
 		//System.out.println( s );
     }

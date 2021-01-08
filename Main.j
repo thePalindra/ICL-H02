@@ -22,8 +22,8 @@
        ; place your bytecodes here
        ; START
 
-       sipush 1
-       sipush 1
+       sipush 2
+       sipush 2
        iadd
        ; END
 
